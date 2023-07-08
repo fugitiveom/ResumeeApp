@@ -13,9 +13,7 @@ def makedir(workdir, company):
     company_sent_dir = os.path.join(workdir, '_Sent', company)
     if os.path.isdir(company_sent_dir):
         ifcontinue = input('Вы уже отправляли резюме этой компании, продолжить? (y/n): ')
-        if ifcontinue == 'y':
-            pass
-        else:
+        if ifcontinue != 'y':
             sys.exit()
     if not os.path.isdir(company_dir):
         os.makedirs(company_dir)
