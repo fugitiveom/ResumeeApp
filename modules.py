@@ -1,6 +1,8 @@
 import os
 import shutil
 import glob
+import sys
+
 from config import email_regexp, resume_regexp, cover_letter_regexp
 import win32com.client as win32
 from datetime import date
@@ -8,6 +10,13 @@ from datetime import date
 
 def makedir(workdir, company):
     company_dir = os.path.join(workdir, company)
+    company_sent_dir = os.path.join(workdir, '_Sent', company)
+    if os.path.isdir(company_sent_dir):
+        ifcontinue = input('Вы уже отправляли резюме этой компании, продолжить? (y/n): ')
+        if ifcontinue == 'y':
+            pass
+        else:
+            sys.exit()
     if not os.path.isdir(company_dir):
         os.makedirs(company_dir)
 
