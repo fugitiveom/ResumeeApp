@@ -3,9 +3,19 @@ import shutil
 import glob
 import sys
 
+import psutil
+
 from config import email_regexp, resume_regexp, cover_letter_regexp
 import win32com.client as win32
 from datetime import date
+
+
+def check_word():
+    for proc in psutil.process_iter():
+        if proc.name() == 'WINWORD.EXE':
+            term_agree = input('Microsoft Word запущен. Закрыть? (y/n): ')
+            if term_agree == 'y':
+                proc.terminate()
 
 
 def makedir(workdir, company):
@@ -40,9 +50,11 @@ def generate_email(workdir, company, position, job_portal):  # TODO Перепи
         data = data.replace('[Job Source]', job_portal)
         f.seek(0)
         f.write(data)
+        f.truncate()
 
 
 def generate_resume(workdir, company):
+    check_word()
     source = glob.glob(workdir + '/' + company + '/' + resume_regexp)
     source[0] = source[0].replace('/', '\\')
 
@@ -56,6 +68,7 @@ def generate_resume(workdir, company):
 
 
 def generate_cover_letter(workdir, company, position, job_portal):
+    check_word()
     source = glob.glob(workdir + '/' + company + '/' + cover_letter_regexp)
     source[0] = source[0].replace('/', '\\')
     word = win32.gencache.EnsureDispatch('Word.Application')

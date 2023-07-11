@@ -1,6 +1,6 @@
 #hardcoded variables
-country = 'Canada'
-job_portal = 'JobBank'
+country = 'USA'
+job_portal = 'Indeed'
 root_dir = 'C:/Users/fugit/OneDrive/Immigration/'
 job_type = 't'
 email_regexp = 'E-mail*'
