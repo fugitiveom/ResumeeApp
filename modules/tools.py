@@ -4,6 +4,7 @@ import sys
 import psutil
 import glob
 import win32com.client as win32
+from config import email_regexp, resume_regexp, cover_letter_regexp
 
 
 class Preparator:
@@ -48,9 +49,11 @@ class WinWord:
         self.word = win32.gencache.EnsureDispatch('Word.Application')
         self.word.Visible = False
 
-
     def close_word(self):
         self.word.Quit()
+
+    def makepath(self):
+        pass
 
     def _terminate_word(self):
         for proc in psutil.process_iter():
