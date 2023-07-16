@@ -61,23 +61,23 @@ class Clear:
 class WinDocsGenerator(Prepare, Clear, WinWord):
     def __init__(self):
         super().__init__()
-        self.prepare_cls = Prepare()
-        self.clear_cls = Clear()
-        self.winword_cls = WinWord()
+        self.prepare = Prepare()
+        self.clear = Clear()
+        self.winword = WinWord()
 
     def generate(self, workdir, company, job_type, position, job_portal):
-        self.prepare_cls.makedir(workdir, company)
-        self.prepare_cls.copy_templates(workdir, company, job_type)
+        self.prepare.makedir(workdir, company)
+        self.prepare.copy_templates(workdir, company, job_type)
 
-        self.winword_cls.open_word()
+        self.winword.open_word()
         
         self.generate_email(workdir, company, position, job_portal)
         self.generate_resume(workdir, company)
         self.generate_cover_letter(workdir, company, position, job_portal)
 
-        self.winword_cls.close_word()
+        self.winword.close_word()
 
-        self.clear_cls.remove_docx(workdir, company)
+        self.clear.remove_docx(workdir, company)
         
 
     def generate_email(self, workdir, company, position, job_portal):  # TODO Переписать на построчный вариант
@@ -96,7 +96,7 @@ class WinDocsGenerator(Prepare, Clear, WinWord):
         source = glob.glob(workdir + '/' + company + '/' + resume_regexp)
         source[0] = source[0].replace('/', '\\')
 
-        doc = self.winword_cls.word.Documents.Open(source[0])
+        doc = self.winword.word.Documents.Open(source[0])
         doc.SaveAs(source[0].replace('docx', 'pdf').replace('tech', company), 17)
         doc.Close()
 
@@ -111,7 +111,7 @@ class WinDocsGenerator(Prepare, Clear, WinWord):
             '[Date]' : str(date.today())
         }
 
-        doc = self.winword_cls.word.Documents.Open(source[0])
+        doc = self.winword.word.Documents.Open(source[0])
 
         for find_text, replace_with in replacements.items():
             for paragraph in doc.Paragraphs:
