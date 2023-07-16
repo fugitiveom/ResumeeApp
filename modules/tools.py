@@ -4,8 +4,6 @@ import sys
 import psutil
 import glob
 import win32com.client as win32
-from config import email_regexp, resume_regexp, cover_letter_regexp
-
 
 class Preparator:
     def __init__(self, workdir, company, job_type):
