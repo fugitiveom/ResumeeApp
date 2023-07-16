@@ -10,7 +10,6 @@ class WindowsWordCase:
         self.job_portal = job_portal
         self.prepare = Preparator(self.workdir, self.company, self.job_type)
         self.clear = GarbageRemover(self.workdir, self.company)
-        self.winword = WinWordAdapter()
         self.windocgen = WinDocsGenerator(self.workdir, self.company, self.job_type, self.position, self.job_portal)
 
     def make_documents(self):
