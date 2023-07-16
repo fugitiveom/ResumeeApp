@@ -60,10 +60,10 @@ class Clear:
 
 class GenerateDocsWin(Prepare, Clear, WinWord):
     def __init__(self):
-            super().__init__()
-            self.prepare_cls = Prepare()
-            self.clear_cls = Clear()
-            self.winword_cls = WinWord()
+        super().__init__()
+        self.prepare_cls = Prepare()
+        self.clear_cls = Clear()
+        self.winword_cls = WinWord()
 
     def generate(self, workdir, company, job_type, position, job_portal):
         self.prepare_cls.makedir(workdir, company)
