@@ -46,15 +46,8 @@ class WinWord:
     def __init__(self):
         self.word = None
 
-    def check_word(self):
-        for proc in psutil.process_iter():
-            if proc.name() == 'WINWORD.EXE':
-                term_agree = input('Microsoft Word запущен. Закрыть? (y/n): ')
-                if term_agree == 'y':
-                    proc.terminate()
-    
     def open_word(self):
-        self.check_word()
+        self._terminate_word()
         self.word = win32.gencache.EnsureDispatch('Word.Application')
         self.word.Visible = False
 
@@ -62,8 +55,21 @@ class WinWord:
     def close_word(self):
         self.word.Quit()
 
-class Clear:
-    def remove_docx(self, workdir, company):
+    def _terminate_word(self):
+        for proc in psutil.process_iter():
+            if proc.name() == 'WINWORD.EXE':
+                input('Microsoft Word запущен, сохраните открытые документы. Enter для продолжения...')
+                proc.terminate()
+
+class GarbageRemover():
+    def __init__(self, workdir, company):
+        self.workdir = workdir
+        self.company = company
+
+    def final_clear(self):
+        self._remove_docx(self.workdir, self.company)
+
+    def _remove_docx(self, workdir, company):
         docxs = glob.glob(workdir + '/' + company + '/' + '*.docx')
         for docx in docxs:
             os.remove(docx)
@@ -77,7 +83,7 @@ class WinDocsGenerator():
         self.position = position
         self.job_portal = job_portal
         self.prepare = Preparator(self.workdir, self.company, self.job_type)
-        self.clear = Clear()
+        self.clear = GarbageRemover(self.workdir, self.company)
         self.winword = WinWord()
 
     def generate(self, workdir, company, job_type, position, job_portal):
@@ -91,7 +97,7 @@ class WinDocsGenerator():
 
         self.winword.close_word()
 
-        self.clear.remove_docx(workdir, company)
+        self.clear.final_clear()
         
 
     def generate_email(self, workdir, company, position, job_portal):  # TODO Переписать на построчный вариант
