@@ -40,7 +40,7 @@ class Preparator:
             elif job_type == 'm' and template.find('manager') != -1:
                 shutil.copy(template, workdir + '/' + company)
 
-class WinWord:
+class WinWordAdapter:
     def __init__(self):
         self.word = None
 

@@ -1,6 +1,6 @@
 from config import email_regexp, resume_regexp, cover_letter_regexp
 from datetime import date
-from modules.tools import WinWord
+from modules.tools import WinWordAdapter
 
 class WinDocsGenerator():
     def __init__(self, workdir, company, job_type, position, job_portal):
@@ -10,7 +10,7 @@ class WinDocsGenerator():
         self.job_type = job_type
         self.position = position
         self.job_portal = job_portal
-        self.winword = WinWord()
+        self.winword = WinWordAdapter()
 
     def generate(self):
         self.winword.open_word()
