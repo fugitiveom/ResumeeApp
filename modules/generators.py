@@ -58,7 +58,7 @@ class Clear:
             os.remove(docx)
 
 
-class GenerateDocsWin(Prepare, Clear, WinWord):
+class WinDocsGenerator(Prepare, Clear, WinWord):
     def __init__(self):
         super().__init__()
         self.prepare_cls = Prepare()

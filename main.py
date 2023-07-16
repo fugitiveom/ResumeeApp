@@ -8,5 +8,5 @@ position = input('Position: ')
 workdir = root_dir + country
 
 if os.name == 'nt':
-    wingenerator = generators.GenerateDocsWin()
+    wingenerator = generators.WinDocsGenerator()
     wingenerator.generate(workdir, company, job_type, position, job_portal)
