@@ -1,7 +1,7 @@
 import glob
 from config import email_regexp, resume_regexp, cover_letter_regexp
 from datetime import date
-from modules.tools import *
+from modules.tools import WinWord
 
 class WinDocsGenerator():
     def __init__(self, workdir, company, job_type, position, job_portal):
@@ -10,23 +10,14 @@ class WinDocsGenerator():
         self.job_type = job_type
         self.position = position
         self.job_portal = job_portal
-        self.prepare = Preparator(self.workdir, self.company, self.job_type)
-        self.clear = GarbageRemover(self.workdir, self.company)
         self.winword = WinWord()
 
-    def generate(self, workdir, company, job_type, position, job_portal):
-        self.prepare.prepare_dir()
-
+    def generate(self):
         self.winword.open_word()
-        
-        self.generate_email(workdir, company, position, job_portal)
-        self.generate_resume(workdir, company)
-        self.generate_cover_letter(workdir, company, position, job_portal)
-
+        self.generate_email(self.workdir, self.company, self.position, self.job_portal)
+        self.generate_resume(self.workdir, self.company)
+        self.generate_cover_letter(self.workdir, self.company, self.position, self.job_portal)
         self.winword.close_word()
-
-        self.clear.final_clear()
-        
 
     def generate_email(self, workdir, company, position, job_portal):  # TODO Переписать на построчный вариант
         source = glob.glob(workdir + '/' + company + '/' + email_regexp)
