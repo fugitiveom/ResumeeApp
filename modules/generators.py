@@ -56,7 +56,7 @@ class WinDocsGenerator():
         self.winword.open_doc(source)
 
         for find_text, replace_with in replacements.items():
-            for paragraph in WinWord.doc.Paragraphs:
+            for paragraph in self.winword.doc.Paragraphs:
                 if find_text in paragraph.Range.Text:
                     paragraph.Range.HighlightColorIndex = 0
                     paragraph.Range.Text = paragraph.Range.Text.replace(find_text, replace_with)
