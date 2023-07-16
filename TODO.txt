@@ -1,6 +1,6 @@
-1. classes - переименовать
-2. GenerageDocsWin - WinDocGenerator
-3. cls - убрать
+#1. classes - переименовать
+#2. GenerageDocsWin - WinDocGenerator
+#3. cls - убрать
 4. из названий классов непонятно зачем они нужны. Сделать например Preparator
 5. В классе Preparator сделать один публичный и остальные приватные
 6. тоже самое в остальных классах

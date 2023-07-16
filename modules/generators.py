@@ -9,7 +9,16 @@ from config import email_regexp, resume_regexp, cover_letter_regexp
 import win32com.client as win32
 from datetime import date
 
-class Prepare:
+class Preparator:
+    def __init__(self, workdir, company, job_type):
+        self.workdir = workdir
+        self.company = company
+        self.job_type = job_type
+
+    def prepare_dir(self):
+        self.makedir()
+        self.copy_templates()
+
     def makedir(self, workdir, company):
         company_dir = os.path.join(workdir, company)
         company_sent_dir = os.path.join(workdir, '_Sent', company)
@@ -20,8 +29,7 @@ class Prepare:
         if not os.path.isdir(company_dir):
             os.makedirs(company_dir)
 
-
-    def copy_templates(selft, workdir, company, job_type):  # TODO убрать конкатенацию
+    def copy_templates(self, workdir, company, job_type):  # TODO убрать конкатенацию
         templates_path = os.path.join(workdir + '/_templates')
         templates = glob.glob(templates_path + '/*.docx')
         templates += glob.glob(templates_path + '/*.txt')
@@ -58,10 +66,10 @@ class Clear:
             os.remove(docx)
 
 
-class WinDocsGenerator(Prepare, Clear, WinWord):
+class WinDocsGenerator(Preparator, Clear, WinWord):
     def __init__(self):
         super().__init__()
-        self.prepare = Prepare()
+        self.prepare = Preparator()
         self.clear = Clear()
         self.winword = WinWord()
 
