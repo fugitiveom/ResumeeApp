@@ -16,20 +16,23 @@ class Preparator:
         self.job_type = job_type
 
     def prepare_dir(self):
-        self.makedir()
-        self.copy_templates()
+        self._check_ifsent(self.workdir, self.company)
+        self._makedir(self.workdir, self.company)
+        self._copy_templates(self.workdir, self.company, self.job_type)
 
-    def makedir(self, workdir, company):
-        company_dir = os.path.join(workdir, company)
+    def _check_ifsent(self, workdir, company):
         company_sent_dir = os.path.join(workdir, '_Sent', company)
         if os.path.isdir(company_sent_dir):
             ifcontinue = input('Вы уже отправляли резюме этой компании, продолжить? (y/n): ')
             if ifcontinue != 'y':
                 sys.exit()
+
+    def _makedir(self, workdir, company):
+        company_dir = os.path.join(workdir, company)
         if not os.path.isdir(company_dir):
             os.makedirs(company_dir)
 
-    def copy_templates(self, workdir, company, job_type):  # TODO убрать конкатенацию
+    def _copy_templates(self, workdir, company, job_type):
         templates_path = os.path.join(workdir + '/_templates')
         templates = glob.glob(templates_path + '/*.docx')
         templates += glob.glob(templates_path + '/*.txt')
@@ -66,16 +69,19 @@ class Clear:
             os.remove(docx)
 
 
-class WinDocsGenerator(Preparator, Clear, WinWord):
-    def __init__(self):
-        super().__init__()
-        self.prepare = Preparator()
+class WinDocsGenerator():
+    def __init__(self, workdir, company, job_type, position, job_portal):
+        self.workdir = workdir
+        self.company = company
+        self.job_type = job_type
+        self.position = position
+        self.job_portal = job_portal
+        self.prepare = Preparator(self.workdir, self.company, self.job_type)
         self.clear = Clear()
         self.winword = WinWord()
 
     def generate(self, workdir, company, job_type, position, job_portal):
-        self.prepare.makedir(workdir, company)
-        self.prepare.copy_templates(workdir, company, job_type)
+        self.prepare.prepare_dir()
 
         self.winword.open_word()
         
