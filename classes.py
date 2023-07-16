@@ -103,8 +103,6 @@ class GenerateDocsWin(Prepare, Clear, WinWord):
     def generate_cover_letter(self, workdir, company, position, job_portal):
         source = glob.glob(workdir + '/' + company + '/' + cover_letter_regexp)
         source[0] = source[0].replace('/', '\\')
-        word = win32.gencache.EnsureDispatch('Word.Application')
-        word.Visible = False
 
         replacements = {
             '[Position Title]' : position,
