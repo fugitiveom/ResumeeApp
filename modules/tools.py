@@ -44,6 +44,13 @@ class WinWord:
     def __init__(self):
         self.word = None
 
+    def open_doc(self, source):
+        self.doc = self.word.Documents.Open(source)
+
+    def save_close_doc(self, ext_old, ext_new, type_res, company, pdf_code, source):
+        self.doc.SaveAs(source.replace(ext_old, ext_new).replace(type_res, company), pdf_code)
+        self.doc.Close()
+
     def open_word(self):
         self._terminate_word()
         self.word = win32.gencache.EnsureDispatch('Word.Application')
@@ -52,8 +59,10 @@ class WinWord:
     def close_word(self):
         self.word.Quit()
 
-    def makepath(self):
-        pass
+    def makepath(self, dir, regexp):
+        source = glob.glob(dir + '/' + regexp)
+        source[0] = source[0].replace('/', '\\')
+        return source[0]
 
     def _terminate_word(self):
         for proc in psutil.process_iter():

@@ -1,4 +1,3 @@
-import glob
 from config import email_regexp, resume_regexp, cover_letter_regexp
 from datetime import date
 from modules.tools import WinWord
@@ -21,9 +20,8 @@ class WinDocsGenerator():
         self.winword.close_word()
 
     def _generate_email_textfile(self):  # TODO Переписать на построчный вариант
-        source = glob.glob(self.companydir + '/' + email_regexp)
-        source[0] = source[0].replace('/', '\\')
-        with open(source[0], 'r+') as f:
+        source = self.winword.makepath(self.companydir, email_regexp)
+        with open(source, 'r+') as f:
             data = f.read()
             data = data.replace('[position name]', self.position)
             data = data.replace('[Company Name]', self.company)
@@ -33,16 +31,20 @@ class WinDocsGenerator():
             f.truncate()
 
     def _convert_resume_to_pdf(self):
-        source = glob.glob(self.companydir + '/' + resume_regexp)
-        source[0] = source[0].replace('/', '\\')
-
-        doc = self.winword.word.Documents.Open(source[0])
-        doc.SaveAs(source[0].replace('docx', 'pdf').replace('tech', self.company), 17)
-        doc.Close()
+        ext_old = 'docx'
+        ext_new = 'pdf'
+        type_res = 'tech'
+        pdf_code = 17
+        source = self.winword.makepath(self.companydir, resume_regexp)
+        self.winword.open_doc(source)
+        self.winword.save_close_doc(ext_old, ext_new, type_res, self.company, pdf_code, source)
 
     def _edit_cover_letter(self):
-        source = glob.glob(self.companydir + '/' + cover_letter_regexp)
-        source[0] = source[0].replace('/', '\\')
+        ext_old = 'docx'
+        ext_new = 'pdf'
+        type_res = 'tech'
+        pdf_code = 17
+        source = self.winword.makepath(self.companydir, cover_letter_regexp)
 
         replacements = {
             '[Position Title]' : self.position,
@@ -51,7 +53,7 @@ class WinDocsGenerator():
             '[Date]' : str(date.today())
         }
 
-        doc = self.winword.word.Documents.Open(source[0])
+        self.winword.open_doc(source)
 
         for find_text, replace_with in replacements.items():
             for paragraph in doc.Paragraphs:
@@ -59,5 +61,4 @@ class WinDocsGenerator():
                     paragraph.Range.HighlightColorIndex = 0
                     paragraph.Range.Text = paragraph.Range.Text.replace(find_text, replace_with)
 
-        doc.SaveAs(source[0].replace('docx', 'pdf').replace('tech', self.company), 17)
-        doc.Close()
+        self.winword.save_close_doc(ext_old, ext_new, type_res, self.company, pdf_code, source)
