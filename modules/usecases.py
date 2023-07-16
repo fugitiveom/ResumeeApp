@@ -1,7 +1,7 @@
 from modules.tools import Preparator, GarbageRemover, WinWord
 from modules.generators import WinDocsGenerator
 
-class WindowsWord_case:
+class WindowsWordCase:
     def __init__(self, workdir, company, job_type, position, job_portal):
         self.workdir = workdir
         self.company = company
