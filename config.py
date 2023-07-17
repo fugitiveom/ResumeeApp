@@ -1,8 +1,10 @@
-#hardcoded variables
-country = 'USA'
-job_portal = 'Indeed'
-root_dir = 'C:/Users/fugit/OneDrive/Immigration/'
-job_type = 't'
-email_regexp = 'E-mail*'
-resume_regexp = 'Resume*'
-cover_letter_regexp = 'Cover*'
+''' hardcoded variables '''
+COUNTRY = 'USA'
+JOB_PORTAL = 'Indeed'
+ROOT_DIR = 'C:/Users/fugit/OneDrive/Immigration/'
+JOB_TYPE = 't'
+
+''' tech consts '''
+EMAIL_REGEXP = 'E-mail*'
+RESUME_REGEXP = 'Resume*'
+COVER_LETTER_REGEXP = 'Cover*'

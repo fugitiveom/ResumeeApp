@@ -1,12 +1,13 @@
-from modules.usecases import *
+''' it's a start file'''
 import os
-from config import country, job_type, root_dir, job_portal
+from modules.usecases import WindowsWordCase
+from config import COUNTRY, JOB_TYPE, ROOT_DIR, JOB_PORTAL
 
 company = input('Company: ')
 position = input('Position: ')
 
-workdir = root_dir + country
+WORKDIR = ROOT_DIR + COUNTRY
 
 if os.name == 'nt':
-    winword_case = WindowsWordCase(workdir, company, job_type, position, job_portal)
+    winword_case = WindowsWordCase(WORKDIR, company, JOB_TYPE, position, JOB_PORTAL)
     winword_case.make_documents()
