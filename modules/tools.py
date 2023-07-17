@@ -45,6 +45,7 @@ class WinWordAdapter:
     ''' this class is an adapter for WinWord '''
     def __init__(self):
         self.word = None
+        self.doc = None
 
     def open_doc(self, source):
         ''' open doc with WORD COM-obj '''
@@ -65,16 +66,17 @@ class WinWordAdapter:
         ''' close Word after a job '''
         self.word.Quit()
 
-    def makepath(self, dir, regexp):
+    def makepath(self, directory, regexp):
         ''' just preparing paths for windows '''
-        source = glob.glob(dir + '/' + regexp)
+        source = glob.glob(directory + '/' + regexp)
         source[0] = source[0].replace('/', '\\')
         return source[0]
 
     def _terminate_word(self):
         for proc in psutil.process_iter():
             if proc.name() == 'WINWORD.EXE':
-                input('Microsoft Word запущен, сохраните открытые документы. Enter для продолжения...')
+                input('Microsoft Word запущен, сохраните открытые документы. \
+                       Enter для продолжения...')
                 proc.terminate()
 
 class GarbageRemover():
