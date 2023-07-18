@@ -36,19 +36,13 @@ class WinDocsGenerator():
             file.truncate()
 
     def _convert_resume_to_pdf(self):
-        ext_old = 'docx'
-        ext_new = 'pdf'
         type_res = 'tech'
-        pdf_code = 17
         source = self.wintools.prep_path_for_win(self.companydir, RESUME_REGEXP)
         self.winword.open_doc(source)
         self.winword.save_docx_as_pdf(type_res, self.company, source)
 
     def _edit_cover_letter(self):
-        ext_old = 'docx'
-        ext_new = 'pdf'
         type_res = 'tech'
-        pdf_code = 17
         source = self.wintools.prep_path_for_win(self.companydir, COVER_LETTER_REGEXP)
 
         replacements = {
