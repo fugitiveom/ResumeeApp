@@ -39,11 +39,12 @@ class WinDocsGenerator():
         type_res = 'tech'
         source_path = self.wintools.prep_path_for_win(self.companydir, RESUME_REGEXP)
         self.winword.open_doc(source_path)
-        self.winword.save_docx_as_pdf(type_res, self.company, source_path)
+        new_path = source_path.replace(type_res, self.company)
+        self.winword.save_docx_as_pdf(new_path)
 
     def _edit_cover_letter(self):
         type_res = 'tech'
-        source = self.wintools.prep_path_for_win(self.companydir, COVER_LETTER_REGEXP)
+        source_path = self.wintools.prep_path_for_win(self.companydir, COVER_LETTER_REGEXP)
 
         replacements = {
             '[Position Title]' : self.position,
@@ -52,7 +53,7 @@ class WinDocsGenerator():
             '[Date]' : str(date.today())
         }
 
-        self.winword.open_doc(source)
+        self.winword.open_doc(source_path)
 
         for find_text, replace_with in replacements.items():
             for paragraph in self.winword.doc.Paragraphs:
@@ -60,4 +61,5 @@ class WinDocsGenerator():
                     paragraph.Range.HighlightColorIndex = 0
                     paragraph.Range.Text = paragraph.Range.Text.replace(find_text, replace_with)
 
-        self.winword.save_docx_as_pdf(type_res, self.company, source)
+        new_path = source_path.replace(type_res, self.company)
+        self.winword.save_docx_as_pdf(new_path)
