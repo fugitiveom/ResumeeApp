@@ -1,6 +1,6 @@
 ''' it's a generator's module'''
 from datetime import date
-from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP
+from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP, resume_types, JOB_TYPE
 from modules.adapters import WinWordAdapter
 from modules.tools import WindowsTools
 
@@ -36,14 +36,14 @@ class WinDocsGenerator():
             file.truncate()
 
     def _convert_resume_to_pdf(self):
-        type_res = 'tech'
+        type_res = resume_types[JOB_TYPE]
         source_path = self.wintools.prep_path_for_win(self.companydir, RESUME_REGEXP)
         self.winword.open_doc(source_path)
         new_path = source_path.replace(type_res, self.company)
         self.winword.save_docx_as_pdf(new_path)
 
     def _edit_cover_letter(self):
-        type_res = 'tech'
+        type_res = resume_types[JOB_TYPE]
         source_path = self.wintools.prep_path_for_win(self.companydir, COVER_LETTER_REGEXP)
 
         replacements = {

@@ -6,9 +6,9 @@ import glob
 
 class WindowsTools:
     ''' it's a class for win tools '''
-    def prep_path_for_win(self, directory, regexp):
+    def prep_path_for_win(self, path, regexp):
         ''' just preparing paths for windows '''
-        source_path = glob.glob(directory + '/' + regexp)
+        source_path = glob.glob(path + '/' + regexp)
         source_path[0] = source_path[0].replace('/', '\\')
         return source_path[0]
 

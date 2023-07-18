@@ -8,3 +8,9 @@ JOB_TYPE = 't'
 EMAIL_REGEXP = 'E-mail*'
 RESUME_REGEXP = 'Resume*'
 COVER_LETTER_REGEXP = 'Cover*'
+
+''' dicts '''
+resume_types = {
+    't': 'tech',
+    'm': 'manager',
+}
