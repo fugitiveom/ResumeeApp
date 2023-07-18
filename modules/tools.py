@@ -7,7 +7,8 @@ import psutil
 import win32com.client as win32
 
 class Preparator:
-    ''' this class is presented for folders prep and checking is resume is already applied to this company '''
+    ''' this class is presented for folders prep and checking is resume\
+          is already applied to this company '''
     def __init__(self, workdir, company, job_type):
         self.workdir = workdir
         self.company = company
