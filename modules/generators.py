@@ -25,8 +25,8 @@ class WinDocsGenerator():
         self.winword.close_word()
 
     def _generate_email_textfile(self):
-        source = self.wintools.prep_path_for_win(self.companydir, EMAIL_REGEXP)
-        with open(source, 'r+', encoding="UTF-8") as file:
+        source_path = self.wintools.prep_path_for_win(self.companydir, EMAIL_REGEXP)
+        with open(source_path, 'r+', encoding="UTF-8") as file:
             data = file.read()
             data = data.replace('[position name]', self.position)
             data = data.replace('[Company Name]', self.company)
@@ -37,9 +37,9 @@ class WinDocsGenerator():
 
     def _convert_resume_to_pdf(self):
         type_res = 'tech'
-        source = self.wintools.prep_path_for_win(self.companydir, RESUME_REGEXP)
-        self.winword.open_doc(source)
-        self.winword.save_docx_as_pdf(type_res, self.company, source)
+        source_path = self.wintools.prep_path_for_win(self.companydir, RESUME_REGEXP)
+        self.winword.open_doc(source_path)
+        self.winword.save_docx_as_pdf(type_res, self.company, source_path)
 
     def _edit_cover_letter(self):
         type_res = 'tech'

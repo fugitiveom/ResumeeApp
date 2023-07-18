@@ -8,9 +8,9 @@ class WindowsTools:
     ''' it's a class for win tools '''
     def prep_path_for_win(self, directory, regexp):
         ''' just preparing paths for windows '''
-        source = glob.glob(directory + '/' + regexp)
-        source[0] = source[0].replace('/', '\\')
-        return source[0]
+        source_path = glob.glob(directory + '/' + regexp)
+        source_path[0] = source_path[0].replace('/', '\\')
+        return source_path[0]
 
 class Preparator:
     ''' this class is presented for folders prep and checking is resume\
