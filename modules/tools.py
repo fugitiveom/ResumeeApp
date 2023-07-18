@@ -16,31 +16,31 @@ class Preparator:
 
     def prepare_dir(self):
         ''' it's a main function to prepare dir '''
-        self._check_ifsent(self.workdir, self.company)
-        self._makedir(self.workdir, self.company)
-        self._copy_templates(self.workdir, self.company, self.job_type)
+        self._check_ifsent()
+        self._makedir()
+        self._copy_templates()
 
-    def _check_ifsent(self, workdir, company):
-        company_sent_dir = os.path.join(workdir, '_Sent', company)
+    def _check_ifsent(self):
+        company_sent_dir = os.path.join(self.workdir, '_Sent', self.company)
         if os.path.isdir(company_sent_dir):
             ifcontinue = input('Вы уже отправляли резюме этой компании, продолжить? (y/n): ')
             if ifcontinue != 'y':
                 sys.exit()
 
-    def _makedir(self, workdir, company):
-        company_dir = os.path.join(workdir, company)
+    def _makedir(self):
+        company_dir = os.path.join(self.workdir, self.company)
         if not os.path.isdir(company_dir):
             os.makedirs(company_dir)
 
-    def _copy_templates(self, workdir, company, job_type):
-        templates_path = os.path.join(workdir + '/_templates')
+    def _copy_templates(self):
+        templates_path = os.path.join(self.workdir + '/_templates')
         templates = glob.glob(templates_path + '/*.docx')
         templates += glob.glob(templates_path + '/*.txt')
         for template in templates:
-            if job_type == 't' and template.find('tech') != -1:
-                shutil.copy(template, workdir + '/' + company)
-            elif job_type == 'm' and template.find('manager') != -1:
-                shutil.copy(template, workdir + '/' + company)
+            if self.job_type == 't' and template.find('tech') != -1:
+                shutil.copy(template, self.workdir + '/' + self.company)
+            elif self.job_type == 'm' and template.find('manager') != -1:
+                shutil.copy(template, self.workdir + '/' + self.company)
 
 class WinWordAdapter:
     ''' this class is an adapter for WinWord '''
@@ -76,8 +76,7 @@ class WinWordAdapter:
     def _terminate_word(self):
         for proc in psutil.process_iter():
             if proc.name() == 'WINWORD.EXE':
-                input('Microsoft Word запущен, сохраните открытые документы. \
-                       Enter для продолжения...')
+                input('Microsoft Word запущен, сохраните открытые документы. Enter для продолжения...')
                 proc.terminate()
 
 class GarbageRemover():
@@ -88,9 +87,9 @@ class GarbageRemover():
 
     def final_clear(self):
         ''' main func for call clearance '''
-        self._remove_docx(self.workdir, self.company)
+        self._remove_docx()
 
-    def _remove_docx(self, workdir, company):
-        docxs = glob.glob(workdir + '/' + company + '/' + '*.docx')
+    def _remove_docx(self):
+        docxs = glob.glob(self.workdir + '/' + self.company + '/' + '*.docx')
         for docx in docxs:
             os.remove(docx)
