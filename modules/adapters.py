@@ -12,9 +12,9 @@ class WinWordAdapter:
         ''' open doc with WORD COM-obj '''
         self.doc = self.word.Documents.Open(source)
 
-    def save_close_doc(self, ext_old, ext_new, type_res, company, pdf_code, source):
+    def save_docx_as_pdf(self, type_res, company, source):
         ''' save as PDF after files prepairing '''
-        self.doc.SaveAs(source.replace(ext_old, ext_new).replace(type_res, company), pdf_code)
+        self.doc.SaveAs(source.replace('docx', 'pdf').replace(type_res, company), 17)
         self.doc.Close()
 
     def open_word(self):

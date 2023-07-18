@@ -42,7 +42,7 @@ class WinDocsGenerator():
         pdf_code = 17
         source = self.wintools.prep_path_for_win(self.companydir, RESUME_REGEXP)
         self.winword.open_doc(source)
-        self.winword.save_close_doc(ext_old, ext_new, type_res, self.company, pdf_code, source)
+        self.winword.save_docx_as_pdf(type_res, self.company, source)
 
     def _edit_cover_letter(self):
         ext_old = 'docx'
@@ -66,4 +66,4 @@ class WinDocsGenerator():
                     paragraph.Range.HighlightColorIndex = 0
                     paragraph.Range.Text = paragraph.Range.Text.replace(find_text, replace_with)
 
-        self.winword.save_close_doc(ext_old, ext_new, type_res, self.company, pdf_code, source)
+        self.winword.save_docx_as_pdf(type_res, self.company, source)
