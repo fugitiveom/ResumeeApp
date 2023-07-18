@@ -3,6 +3,7 @@ import os
 import shutil
 import sys
 import glob
+from config import resume_types
 
 class WindowsTools:
     ''' it's a class for win tools '''
@@ -15,9 +16,10 @@ class WindowsTools:
 class Preparator:
     ''' this class is presented for folders prep and checking is resume\
           is already applied to this company '''
-    def __init__(self, workdir, company, job_type):
+    def __init__(self, companypath, workdir, company, job_type):
         self.workdir = workdir
         self.company = company
+        self.companypath = companypath
         self.job_type = job_type
 
     def prepare_dir(self):
@@ -34,32 +36,29 @@ class Preparator:
                 sys.exit()
 
     def _makedir(self):
-        company_dir = os.path.join(self.workdir, self.company)
-        if not os.path.isdir(company_dir):
-            os.makedirs(company_dir)
+        if not os.path.isdir(self.companypath):
+            os.makedirs(self.companypath)
 
     def _copy_templates(self):
         templates_path = os.path.join(self.workdir + '/_templates')
         templates = glob.glob(templates_path + '/*.docx')
         templates += glob.glob(templates_path + '/*.txt')
         for template in templates:
-            if self.job_type == 't' and template.find('tech') != -1:
-                shutil.copy(template, self.workdir + '/' + self.company)
-            elif self.job_type == 'm' and template.find('manager') != -1:
-                shutil.copy(template, self.workdir + '/' + self.company)
+            for key, value in resume_types.items():
+                if self.job_type == key and template.find(value) != -1:
+                    shutil.copy(template, self.companypath)
 
 
 class GarbageRemover():
     ''' clear directory after job and leaving only needed files '''
-    def __init__(self, workdir, company):
-        self.workdir = workdir
-        self.company = company
+    def __init__(self, path):
+        self.path = path
 
     def final_clear(self):
         ''' main func for call clearance '''
         self._remove_docx()
 
     def _remove_docx(self):
-        docxs = glob.glob(self.workdir + '/' + self.company + '/' + '*.docx')
+        docxs = glob.glob(self.path + '/*.docx')
         for docx in docxs:
             os.remove(docx)
