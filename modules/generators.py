@@ -1,7 +1,7 @@
 ''' it's a generator's module'''
 from datetime import date
 from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP
-from modules.tools import WinWordAdapter
+from modules.adapters import WinWordAdapter
 
 class WinDocsGenerator():
     ''' this class is representing a generator of documents '''
