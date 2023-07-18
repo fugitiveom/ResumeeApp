@@ -2,6 +2,7 @@
 from datetime import date
 from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP
 from modules.adapters import WinWordAdapter
+from modules.tools import WindowsTools
 
 class WinDocsGenerator():
     ''' this class is representing a generator of documents '''
@@ -13,6 +14,7 @@ class WinDocsGenerator():
         self.position = position
         self.job_portal = job_portal
         self.winword = WinWordAdapter()
+        self.wintools = WindowsTools()
 
     def generate(self):
         ''' main generating method '''
@@ -23,7 +25,7 @@ class WinDocsGenerator():
         self.winword.close_word()
 
     def _generate_email_textfile(self):
-        source = self.winword.makepath(self.companydir, EMAIL_REGEXP)
+        source = self.wintools.prep_path_for_win(self.companydir, EMAIL_REGEXP)
         with open(source, 'r+', encoding="UTF-8") as file:
             data = file.read()
             data = data.replace('[position name]', self.position)
@@ -38,7 +40,7 @@ class WinDocsGenerator():
         ext_new = 'pdf'
         type_res = 'tech'
         pdf_code = 17
-        source = self.winword.makepath(self.companydir, RESUME_REGEXP)
+        source = self.wintools.prep_path_for_win(self.companydir, RESUME_REGEXP)
         self.winword.open_doc(source)
         self.winword.save_close_doc(ext_old, ext_new, type_res, self.company, pdf_code, source)
 
@@ -47,7 +49,7 @@ class WinDocsGenerator():
         ext_new = 'pdf'
         type_res = 'tech'
         pdf_code = 17
-        source = self.winword.makepath(self.companydir, COVER_LETTER_REGEXP)
+        source = self.wintools.prep_path_for_win(self.companydir, COVER_LETTER_REGEXP)
 
         replacements = {
             '[Position Title]' : self.position,

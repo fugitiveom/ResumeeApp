@@ -1,5 +1,4 @@
 ''' it's a module for adapters'''
-import glob
 import win32com.client as win32
 import psutil
 
@@ -27,12 +26,6 @@ class WinWordAdapter:
     def close_word(self):
         ''' close Word after a job '''
         self.word.Quit()
-
-    def makepath(self, directory, regexp):
-        ''' just preparing paths for windows '''
-        source = glob.glob(directory + '/' + regexp)
-        source[0] = source[0].replace('/', '\\')
-        return source[0]
 
     def _terminate_word(self):
         for proc in psutil.process_iter():
