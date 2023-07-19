@@ -29,8 +29,19 @@ class WindowsWordCase:
             if ifcontinue != 'y':
                 sys.exit()
 
-        self.prepare.prepare_dir()
+        try:
+            self.prepare.prepare_dir()
+        except:
+            print('При подготовке директории возникла ошибка. Выполняется откат изменений')
+            self.clear.remove_directory()
 
-        self.windocgen.generate()
+        try:
+            self.windocgen.generate()
+        except:
+            print('При генерации документов произошла ошибка. Выполняется откат изменений')
+            self.clear.remove_directory()
 
-        self.clear.final_clear()
+        try:
+            self.clear.final_clear()
+        except:
+            print('При финальной очистке каталога произошла ошибка.')
