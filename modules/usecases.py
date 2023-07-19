@@ -2,7 +2,7 @@
 import os
 import sys
 from modules.tools import Preparator, GarbageRemover
-from modules.generators import WinDocsGenerator
+from modules.generators import DocsGenerator
 
 class WindowsWordCase:
     ''' it's a class used to UseCase for Windows and Word'''
@@ -10,7 +10,7 @@ class WindowsWordCase:
         self.companypath = os.path.join(workdir, company)
         self.prepare = Preparator(self.companypath, workdir, company, job_type)
         self.clear = GarbageRemover(self.companypath)
-        self.windocgen = WinDocsGenerator(self.companypath, company, job_type, position, job_portal)
+        self.docgen = DocsGenerator(self.companypath, company, job_type, position, job_portal)
 
     def make_documents(self):
         ''' it's a main function '''
@@ -36,7 +36,7 @@ class WindowsWordCase:
             self.clear.remove_directory()
 
         try:
-            self.windocgen.generate()
+            self.docgen.generate()
         except OSError:
             print('При генерации документов произошла ошибка. Выполняется откат изменений')
             self.clear.remove_directory()

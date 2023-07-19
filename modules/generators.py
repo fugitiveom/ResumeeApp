@@ -1,10 +1,11 @@
 ''' it's a generator's module'''
+import os
 from datetime import date
 from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP, resume_types, JOB_TYPE
 from modules.adapters import WinWordAdapter
 from modules.tools import WindowsTools
 
-class WinDocsGenerator():
+class DocsGenerator():
     ''' this class is representing a generator of documents '''
     def __init__(self, companypath, company, job_type, position, job_portal):
         self.companypath = companypath
@@ -12,19 +13,20 @@ class WinDocsGenerator():
         self.job_type = job_type
         self.position = position
         self.job_portal = job_portal
-        self.winword = WinWordAdapter()
-        self.wintools = WindowsTools()
+        if os.name == 'nt':
+            self.adapter = WinWordAdapter()
+            self.tools = WindowsTools()
 
     def generate(self):
         ''' main generating method '''
-        self.winword.open_word()
+        self.adapter.open_word()
         self._generate_email_textfile()
         self._convert_resume_to_pdf()
         self._edit_cover_letter()
-        self.winword.close_word()
+        self.adapter.close_word()
 
     def _generate_email_textfile(self):
-        source_path = self.wintools.prep_path_for_win(self.companypath, EMAIL_REGEXP)
+        source_path = self.tools.prep_path_for_win(self.companypath, EMAIL_REGEXP)
         with open(source_path, 'r+', encoding="UTF-8") as file:
             data = file.read()
             data = data.replace('[position name]', self.position)
@@ -36,14 +38,14 @@ class WinDocsGenerator():
 
     def _convert_resume_to_pdf(self):
         type_res = resume_types[JOB_TYPE]
-        source_path = self.wintools.prep_path_for_win(self.companypath, RESUME_REGEXP)
-        self.winword.open_doc(source_path)
+        source_path = self.tools.prep_path_for_win(self.companypath, RESUME_REGEXP)
+        self.adapter.open_doc(source_path)
         new_path = source_path.replace(type_res, self.company)
-        self.winword.save_docx_as_pdf(new_path)
+        self.adapter.save_docx_as_pdf(new_path)
 
     def _edit_cover_letter(self):
         type_res = resume_types[JOB_TYPE]
-        source_path = self.wintools.prep_path_for_win(self.companypath, COVER_LETTER_REGEXP)
+        source_path = self.tools.prep_path_for_win(self.companypath, COVER_LETTER_REGEXP)
 
         replacements = {
             '[Position Title]' : self.position,
@@ -52,13 +54,13 @@ class WinDocsGenerator():
             '[Date]' : str(date.today())
         }
 
-        self.winword.open_doc(source_path)
+        self.adapter.open_doc(source_path)
 
         for find_text, replace_with in replacements.items():
-            for paragraph in self.winword.doc.Paragraphs:
+            for paragraph in self.adapter.doc.Paragraphs:
                 if find_text in paragraph.Range.Text:
                     paragraph.Range.HighlightColorIndex = 0
                     paragraph.Range.Text = paragraph.Range.Text.replace(find_text, replace_with)
 
         new_path = source_path.replace(type_res, self.company)
-        self.winword.save_docx_as_pdf(new_path)
+        self.adapter.save_docx_as_pdf(new_path)
