@@ -19,11 +19,9 @@ class DocsGenerator():
 
     def generate(self):
         ''' main generating method '''
-        self.adapter.open_word()
         self._generate_email_textfile()
         self._convert_resume_to_pdf()
         self._edit_cover_letter()
-        self.adapter.close_word()
 
     def _generate_email_textfile(self):
         source_path = self.tools.prep_path_for_win(self.companypath, EMAIL_REGEXP)
@@ -39,9 +37,8 @@ class DocsGenerator():
     def _convert_resume_to_pdf(self):
         type_res = resume_types[JOB_TYPE]
         source_path = self.tools.prep_path_for_win(self.companypath, RESUME_REGEXP)
-        self.adapter.open_doc(source_path)
         new_path = source_path.replace(type_res, self.company)
-        self.adapter.save_docx_as_pdf(new_path)
+        self.adapter.save_docx_as_pdf(source_path, new_path)
 
     def _edit_cover_letter(self):
         type_res = resume_types[JOB_TYPE]
@@ -54,13 +51,7 @@ class DocsGenerator():
             '[Date]' : str(date.today())
         }
 
-        self.adapter.open_doc(source_path)
-
-        for find_text, replace_with in replacements.items():
-            for paragraph in self.adapter.doc.Paragraphs:
-                if find_text in paragraph.Range.Text:
-                    paragraph.Range.HighlightColorIndex = 0
-                    paragraph.Range.Text = paragraph.Range.Text.replace(find_text, replace_with)
+        self.adapter.replace_text_docx(source_path, replacements)
 
         new_path = source_path.replace(type_res, self.company)
-        self.adapter.save_docx_as_pdf(new_path)
+        self.adapter.save_docx_as_pdf(source_path, new_path)
