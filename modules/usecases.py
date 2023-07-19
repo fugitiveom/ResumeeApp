@@ -25,7 +25,8 @@ class WindowsWordCase:
             if ifcontinue != 'y':
                 sys.exit()
         if preconditions['word_processes'] == ['WINWORD.EXE']:
-            ifcontinue = input('Microsoft Word запущен, в случае продолжения он будет закрыт. Продолжить? (y/n): ')
+            ifcontinue = input('Microsoft Word запущен, в случае продолжения он будет закрыт. '
+                               'Продолжить? (y/n): ')
             if ifcontinue != 'y':
                 sys.exit()
 
