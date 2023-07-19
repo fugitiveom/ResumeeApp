@@ -30,5 +30,4 @@ class WinWordAdapter:
     def _terminate_word(self):
         for proc in psutil.process_iter():
             if proc.name() == 'WINWORD.EXE':
-                input('Microsoft Word запущен, сохраните открытые документы. Enter для продолжения...')
                 proc.terminate()

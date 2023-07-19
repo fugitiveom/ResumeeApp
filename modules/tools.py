@@ -1,8 +1,8 @@
 ''' it's a module for different tools '''
 import os
 import shutil
-import sys
 import glob
+import psutil
 from config import resume_types
 
 class WindowsTools:
@@ -24,16 +24,16 @@ class Preparator:
 
     def prepare_dir(self):
         ''' it's a main function to prepare dir '''
-        self._check_ifsent()
         self._makedir()
         self._copy_templates()
 
-    def _check_ifsent(self):
-        company_sent_dir = os.path.join(self.workdir, '_Sent', self.company)
-        if os.path.isdir(company_sent_dir):
-            ifcontinue = input('Вы уже отправляли резюме этой компании, продолжить? (y/n): ')
-            if ifcontinue != 'y':
-                sys.exit()
+    def check_preconditions(self) -> dict:
+        ''' check all preconditions here '''
+        if_already_sent = os.path.isdir(os.path.join(self.workdir, '_Sent', self.company))
+        if_path_exists = os.path.isdir(self.companypath)
+        word_processes = [proc.name() for proc in psutil.process_iter() \
+                          if proc.name() == 'WINWORD.EXE']
+        return {'if_already_sent': if_already_sent, 'word_processes': word_processes, 'if_path_exists': if_path_exists}
 
     def _makedir(self):
         if not os.path.isdir(self.companypath):
@@ -57,6 +57,10 @@ class GarbageRemover():
     def final_clear(self):
         ''' main func for call clearance '''
         self._remove_docx()
+
+    def remove_directory(self):
+        ''' func for reverting changes is preparation fails '''
+        os.removedirs(self.path)
 
     def _remove_docx(self):
         docxs = glob.glob(self.path + '/*.docx')
