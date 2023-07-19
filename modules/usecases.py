@@ -31,17 +31,17 @@ class WindowsWordCase:
 
         try:
             self.prepare.prepare_dir()
-        except:
+        except OSError:
             print('При подготовке директории возникла ошибка. Выполняется откат изменений')
             self.clear.remove_directory()
 
         try:
             self.windocgen.generate()
-        except:
+        except OSError:
             print('При генерации документов произошла ошибка. Выполняется откат изменений')
             self.clear.remove_directory()
 
         try:
             self.clear.final_clear()
-        except:
+        except OSError:
             print('При финальной очистке каталога произошла ошибка.')
