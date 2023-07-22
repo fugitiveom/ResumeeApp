@@ -9,11 +9,11 @@ from modules.generators import DocsGenerator
 class UseCaseDataDTO:
     ''' DTO object for vars exchange '''
     def __init__(self, company, job_type, position, job_portal, replacements):
-        self.company = company
-        self.job_type = job_type
-        self.position = position
-        self.job_portal = job_portal
-        self.replacements = replacements
+        setattr(self, 'company', company)
+        setattr(self, 'job_type', job_type)
+        setattr(self, 'position', position)
+        setattr(self, 'job_portal', job_portal)
+        setattr(self, 'replacements', replacements)
 
 class WindowsWordCase:
     ''' it's a class used to UseCase for Windows and Word '''
