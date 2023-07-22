@@ -1,6 +1,5 @@
 ''' it's a generator's module'''
 import os
-from datetime import date
 from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP, resume_types, JOB_TYPE
 from modules.usecases import UseCaseDataDTO
 from modules.adapters import WinWordAdapter
