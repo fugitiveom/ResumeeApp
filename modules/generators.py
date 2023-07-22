@@ -2,12 +2,13 @@
 import os
 from datetime import date
 from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP, resume_types, JOB_TYPE
+from modules.usecases import UseCaseDataDTO
 from modules.adapters import WinWordAdapter
 from modules.tools import WindowsTools
 
 class DocsGenerator():
     ''' this class is representing a generator of documents '''
-    def __init__(self, companypath, data_dto):
+    def __init__(self, companypath, data_dto: UseCaseDataDTO):
         self.companypath = companypath
         self.company = data_dto.company
         self.job_type = data_dto.job_type

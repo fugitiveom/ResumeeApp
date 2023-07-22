@@ -13,8 +13,8 @@ class UseCaseDataDTO:
         self.job_portal = job_portal
 
 class WindowsWordCase:
-    ''' it's a class used to UseCase for Windows and Word'''
-    def __init__(self, workdir, data_dto):
+    ''' it's a class used to UseCase for Windows and Word '''
+    def __init__(self, workdir, data_dto: UseCaseDataDTO):
         self.data_dto = data_dto
         self.companypath = os.path.join(workdir, self.data_dto.company)
         self.prepare = Preparator(self.companypath, workdir, self.data_dto.company, \
@@ -24,7 +24,6 @@ class WindowsWordCase:
 
     def make_documents(self):
         ''' it's a main function '''
-
         preconditions = self.prepare.check_preconditions()
         if preconditions['if_path_exists']:
             ifcontinue = input('Каталог клиента уже существует, продолжить работу? (y/n): ')
