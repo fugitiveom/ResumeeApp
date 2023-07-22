@@ -7,12 +7,12 @@ from modules.tools import WindowsTools
 
 class DocsGenerator():
     ''' this class is representing a generator of documents '''
-    def __init__(self, companypath, company, job_type, position, job_portal):
+    def __init__(self, companypath, data_dto):
         self.companypath = companypath
-        self.company = company
-        self.job_type = job_type
-        self.position = position
-        self.job_portal = job_portal
+        self.company = data_dto.company
+        self.job_type = data_dto.job_type
+        self.position = data_dto.position
+        self.job_portal = data_dto.job_portal
         if os.name == 'nt':
             self.adapter = WinWordAdapter()
             self.tools = WindowsTools()

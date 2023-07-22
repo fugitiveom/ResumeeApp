@@ -20,8 +20,7 @@ class WindowsWordCase:
         self.prepare = Preparator(self.companypath, workdir, self.data_dto.company, \
                                   self.data_dto.job_type)
         self.clear = GarbageRemover(self.companypath)
-        self.docgen = DocsGenerator(self.companypath, self.data_dto.company, \
-                                    self.data_dto.job_type, self.data_dto.position, self.data_dto.job_portal)
+        self.docgen = DocsGenerator(self.companypath, self.data_dto)
 
     def make_documents(self):
         ''' it's a main function '''
