@@ -42,14 +42,7 @@ class DocsGenerator():
         type_res = resume_types[JOB_TYPE]
         source_path = self.tools.prep_path_for_win(self.companypath, COVER_LETTER_REGEXP)
 
-        replacements = {
-            '[Position Title]': self.data_dto.position,
-            '[Company Name]': self.data_dto.company,
-            '[Platform/Source]': self.data_dto.job_portal,
-            '[Date]': str(date.today())
-        }
-
-        self.adapter.replace_text_docx(source_path, replacements)
+        self.adapter.replace_text_docx(source_path, self.data_dto.replacements)
 
         new_path = source_path.replace(type_res, self.data_dto.company)
         self.adapter.save_docx_as_pdf(source_path, new_path)

@@ -17,7 +17,7 @@ replacements = {
     PH_DATE: str(date.today())
 }
 
-use_case_data_dto = UseCaseDataDTO(company, JOB_TYPE, position, JOB_PORTAL)
+use_case_data_dto = UseCaseDataDTO(company, JOB_TYPE, position, JOB_PORTAL, replacements)
 
 if os.name == 'nt':
     winword_case = WindowsWordCase(WORKDIR, use_case_data_dto)
