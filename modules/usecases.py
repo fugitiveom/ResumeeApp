@@ -5,6 +5,7 @@ from modules.tools import Preparator, GarbageRemover
 from modules.generators import DocsGenerator
 
 class UseCaseDataDTO:
+    ''' DTO object for vars exchange '''
     def __init__(self, company, job_type, position, job_portal):
         self.company = company
         self.job_type = job_type
