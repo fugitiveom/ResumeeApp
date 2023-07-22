@@ -45,10 +45,10 @@ class DocsGenerator():
         source_path = self.tools.prep_path_for_win(self.companypath, COVER_LETTER_REGEXP)
 
         replacements = {
-            '[Position Title]' : self.position,
-            '[Company Name]' : self.company,
-            '[Platform/Source]' : self.job_portal,
-            '[Date]' : str(date.today())
+            '[Position Title]': self.position,
+            '[Company Name]': self.company,
+            '[Platform/Source]': self.job_portal,
+            '[Date]': str(date.today())
         }
 
         self.adapter.replace_text_docx(source_path, replacements)
