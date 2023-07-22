@@ -4,13 +4,22 @@ import sys
 from modules.tools import Preparator, GarbageRemover
 from modules.generators import DocsGenerator
 
+class UseCaseDataDTO:
+    def __init__(self, company, job_type, position, job_portal):
+        self.company = company
+        self.job_type = job_type
+        self.position = position
+        self.job_portal = job_portal
+
+
 class WindowsWordCase:
     ''' it's a class used to UseCase for Windows and Word'''
-    def __init__(self, workdir, company, job_type, position, job_portal):
+    def __init__(self, workdir):
         self.companypath = os.path.join(workdir, company)
         self.prepare = Preparator(self.companypath, workdir, company, job_type)
         self.clear = GarbageRemover(self.companypath)
         self.docgen = DocsGenerator(self.companypath, company, job_type, position, job_portal)
+        self.datadto = UseCaseDataDTO()
 
     def make_documents(self):
         ''' it's a main function '''
