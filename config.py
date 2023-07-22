@@ -9,6 +9,12 @@ EMAIL_REGEXP = 'E-mail*'
 RESUME_REGEXP = 'Resume*'
 COVER_LETTER_REGEXP = 'Cover*'
 
+''' replacement placeholders '''
+POSITION_TITLE = '[Position Title]'
+COMPANY_NAME = '[Company Name]'
+PLATFORM_SOURCE = '[Platform/Source]'
+DATE = '[Date]'
+
 ''' dicts '''
 resume_types = {
     't': 'tech',
