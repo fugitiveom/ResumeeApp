@@ -8,8 +8,8 @@ position = input('Position: ')
 
 WORKDIR = ROOT_DIR + COUNTRY
 
-usecasedatadto = UseCaseDataDTO(company, JOB_TYPE, position, JOB_PORTAL)
+use_case_data_dto = UseCaseDataDTO(company, JOB_TYPE, position, JOB_PORTAL)
 
 if os.name == 'nt':
-    winword_case = WindowsWordCase(WORKDIR, company, JOB_TYPE, position, JOB_PORTAL)
+    winword_case = WindowsWordCase(WORKDIR, use_case_data_dto)
     winword_case.make_documents()
