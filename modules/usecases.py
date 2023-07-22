@@ -1,9 +1,11 @@
 ''' it's a usecases module '''
 import os
 import sys
+from dataclasses import dataclass
 from modules.tools import Preparator, GarbageRemover
 from modules.generators import DocsGenerator
 
+@dataclass(frozen=True)
 class UseCaseDataDTO:
     ''' DTO object for vars exchange '''
     def __init__(self, company, job_type, position, job_portal):

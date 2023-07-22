@@ -10,10 +10,7 @@ class DocsGenerator():
     ''' this class is representing a generator of documents '''
     def __init__(self, companypath, data_dto: UseCaseDataDTO):
         self.companypath = companypath
-        self.company = data_dto.company
-        self.job_type = data_dto.job_type
-        self.position = data_dto.position
-        self.job_portal = data_dto.job_portal
+        self.data_dto = data_dto
         if os.name == 'nt':
             self.adapter = WinWordAdapter()
             self.tools = WindowsTools()
@@ -28,9 +25,9 @@ class DocsGenerator():
         source_path = self.tools.prep_path_for_win(self.companypath, EMAIL_REGEXP)
         with open(source_path, 'r+', encoding="UTF-8") as file:
             data = file.read()
-            data = data.replace('[position name]', self.position)
-            data = data.replace('[Company Name]', self.company)
-            data = data.replace('[Job Source]', self.job_portal)
+            data = data.replace('[position name]', self.data_dto.position)
+            data = data.replace('[Company Name]', self.data_dto.company)
+            data = data.replace('[Job Source]', self.data_dto.job_portal)
             file.seek(0)
             file.write(data)
             file.truncate()
@@ -38,7 +35,7 @@ class DocsGenerator():
     def _convert_resume_to_pdf(self):
         type_res = resume_types[JOB_TYPE]
         source_path = self.tools.prep_path_for_win(self.companypath, RESUME_REGEXP)
-        new_path = source_path.replace(type_res, self.company)
+        new_path = source_path.replace(type_res, self.data_dto.company)
         self.adapter.save_docx_as_pdf(source_path, new_path)
 
     def _edit_cover_letter(self):
@@ -46,13 +43,13 @@ class DocsGenerator():
         source_path = self.tools.prep_path_for_win(self.companypath, COVER_LETTER_REGEXP)
 
         replacements = {
-            '[Position Title]': self.position,
-            '[Company Name]': self.company,
-            '[Platform/Source]': self.job_portal,
+            '[Position Title]': self.data_dto.position,
+            '[Company Name]': self.data_dto.company,
+            '[Platform/Source]': self.data_dto.job_portal,
             '[Date]': str(date.today())
         }
 
         self.adapter.replace_text_docx(source_path, replacements)
 
-        new_path = source_path.replace(type_res, self.company)
+        new_path = source_path.replace(type_res, self.data_dto.company)
         self.adapter.save_docx_as_pdf(source_path, new_path)
