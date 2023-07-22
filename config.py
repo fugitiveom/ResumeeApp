@@ -10,10 +10,10 @@ RESUME_REGEXP = 'Resume*'
 COVER_LETTER_REGEXP = 'Cover*'
 
 ''' replacement placeholders '''
-POSITION_TITLE = '[Position Title]'
-COMPANY_NAME = '[Company Name]'
-PLATFORM_SOURCE = '[Platform/Source]'
-DATE = '[Date]'
+PH_POSITION_TITLE = '[Position Title]'
+PH_COMPANY_NAME = '[Company Name]'
+PH_PLATFORM_SOURCE = '[Platform/Source]'
+PH_DATE = '[Date]'
 
 ''' dicts '''
 resume_types = {
