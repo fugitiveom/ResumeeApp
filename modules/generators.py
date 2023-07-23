@@ -22,9 +22,8 @@ class DocsGenerator():
         source_path = os.path.normpath(self.tools.find_file_w_ending(self.gen_path, EMAIL_REGEXP))
         with open(source_path, 'r+', encoding="UTF-8") as file:
             data = file.read()
-            data = data.replace('[position name]', self.data_dto.position)
-            data = data.replace('[Company Name]', self.data_dto.company)
-            data = data.replace('[Job Source]', self.data_dto.job_portal)
+            for find_str, repl_w in self.data_dto.replacements.items():
+                data = data.replace(find_str, repl_w)
             file.seek(0)
             file.write(data)
             file.truncate()
