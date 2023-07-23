@@ -1,7 +1,6 @@
 ''' it's a usecases module '''
 import os
 import sys
-import psutil
 from dataclasses import dataclass
 from modules.tools import Preparator, GarbageRemover, Tools
 from modules.generators import DocsGenerator
