@@ -1,0 +1,22 @@
+# hardcoded variables
+country: USA
+job_portal: Indeed
+job_type: t
+root_dir: C:/Users/fugit/OneDrive/Immigration/
+
+# tech consts 
+cover_letter_regexp: Cover*
+email_regexp: E-mail*
+resume_regexp: Resume*
+
+# replacement placeholders
+ph_company_name: '[Company Name]'
+ph_date: '[Date]'
+ph_platform_source: '[Platform/Source]'
+ph_position_title: '[Position Title]'
+
+# dicts
+resume_types:
+  m: manager
+  t: tech
+
