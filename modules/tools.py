@@ -2,7 +2,6 @@
 import os
 import shutil
 import glob
-import psutil
 from config import resume_types
 
 class WindowsTools:
@@ -26,15 +25,6 @@ class Preparator:
         ''' it's a main function to prepare dir '''
         self._makedir()
         self._copy_templates()
-
-    def check_preconditions(self) -> dict:
-        ''' check all preconditions here '''
-        if_already_sent = os.path.isdir(os.path.join(self.workdir, '_Sent', self.company))
-        if_path_exists = os.path.isdir(self.companypath)
-        word_processes = [proc.name() for proc in psutil.process_iter() \
-                          if proc.name() == 'WINWORD.EXE']
-        return {'if_already_sent': if_already_sent, 'word_processes': word_processes, \
-                 'if_path_exists': if_path_exists}
 
     def _makedir(self):
         if not os.path.isdir(self.companypath):
