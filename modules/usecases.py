@@ -1,7 +1,7 @@
 ''' it's a usecases module '''
 import os
 from dataclasses import dataclass
-from modules.tools import Preparator, GarbageRemover
+from modules.tools import Preparator, GarbageRemover, WindowsTools
 from modules.generators import DocsGenerator
 from modules.adapters import WinWordAdapter
 
@@ -19,11 +19,13 @@ class WindowsWordCase:
     ''' it's a class used to UseCase for Windows and Word '''
     def __init__(self, workdir, data_dto: UseCaseDataDTO):
         self.data_dto = data_dto
+        self.office_adapter=WinWordAdapter()
+        self.tools = WindowsTools()
         self.companypath = os.path.join(workdir, self.data_dto.company)
         self.prepare = Preparator(self.companypath, workdir, self.data_dto.company, \
                                   self.data_dto.job_type)
         self.clear = GarbageRemover(self.companypath)
-        self.docgen = DocsGenerator(self.companypath, self.data_dto, office_adapter=WinWordAdapter())
+        self.docgen = DocsGenerator(self.companypath, self.data_dto, self.office_adapter, self.tools)
 
     def make_documents(self):
         ''' it's a main function '''
