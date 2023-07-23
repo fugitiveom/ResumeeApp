@@ -1,5 +1,7 @@
 ''' it's a usecases module '''
 import os
+import sys
+import psutil
 from dataclasses import dataclass
 from modules.tools import Preparator, GarbageRemover, Tools
 from modules.generators import DocsGenerator
@@ -29,6 +31,14 @@ class WindowsWordCase:
 
     def make_documents(self):
         ''' it's a main function '''
+        word_process = WinWordAdapter.if_word_open()
+
+        if word_process == ['WINWORD.EXE']:
+            ifcontinue = input('Microsoft Word запущен, в случае продолжения он будет закрыт. '
+                                'Продолжить? (y/n): ')
+            if ifcontinue != 'y':
+                sys.exit()
+
         try:
             self.prepare.prepare_dir()
         except OSError:

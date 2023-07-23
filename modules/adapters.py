@@ -6,32 +6,41 @@ class WinWordAdapter:
     ''' this class is an adapter for WinWord '''
     def __init__(self):
         self.word = None
-        self.doc = None
-        self._open_word()
+        self.pdf_type_no = 17
+        self.word_proc = 'WINWORD.EXE'
+        self._open_silent_word()
+
+    @staticmethod
+    def if_word_open():
+        ''' checks if word process run '''
+        word_process = [proc.name() for proc in psutil.process_iter() \
+            if proc.name() == 'WINWORD.EXE']
+        return word_process
 
     def save_docx_as_pdf(self, path, new_path=None):
         ''' save as PDF after files prepairing '''
-        self._open_doc(path)
+        doc = self._open_doc(path)
         path = new_path if new_path else path
-        self.doc.SaveAs(path.replace('docx', 'pdf'), 17)
-        self.doc.Close()
+        doc.SaveAs(path.replace('docx', 'pdf'), self.pdf_type_no)
+        doc.Close()
 
     def replace_text_docx(self, path, replacements):
         ''' replace text in doc '''
-        self._open_doc(path)
+        doc = self._open_doc(path)
         for find_text, replace_with in replacements.items():
-            for paragraph in self.doc.Paragraphs:
+            for paragraph in doc.Paragraphs:
                 if find_text in paragraph.Range.Text:
                     paragraph.Range.HighlightColorIndex = 0
                     paragraph.Range.Text = paragraph.Range.Text.replace(find_text, replace_with)
-        self.doc.Save()
-        self.doc.Close()
+        doc.Save()
+        doc.Close()
 
     def _open_doc(self, source_path):
         ''' open doc with WORD COM-obj '''
-        self.doc = self.word.Documents.Open(source_path)
+        doc = self.word.Documents.Open(source_path)
+        return doc
 
-    def _open_word(self):
+    def _open_silent_word(self):
         ''' for speed optimizing we open Word globally at the start '''
         self._terminate_word()
         self.word = win32.gencache.EnsureDispatch('Word.Application')
@@ -43,7 +52,7 @@ class WinWordAdapter:
 
     def _terminate_word(self):
         for proc in psutil.process_iter():
-            if proc.name() == 'WINWORD.EXE':
+            if proc.name() == self.word_proc:
                 proc.terminate()
 
     def __del__(self):
