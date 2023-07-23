@@ -3,6 +3,7 @@ import os
 from dataclasses import dataclass
 from modules.tools import Preparator, GarbageRemover
 from modules.generators import DocsGenerator
+from modules.adapters import WinWordAdapter
 
 @dataclass(frozen=True)
 class UseCaseDataDTO:
@@ -22,7 +23,7 @@ class WindowsWordCase:
         self.prepare = Preparator(self.companypath, workdir, self.data_dto.company, \
                                   self.data_dto.job_type)
         self.clear = GarbageRemover(self.companypath)
-        self.docgen = DocsGenerator(self.companypath, self.data_dto)
+        self.docgen = DocsGenerator(self.companypath, self.data_dto, office_adapter=WinWordAdapter())
 
     def make_documents(self):
         ''' it's a main function '''

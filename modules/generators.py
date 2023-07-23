@@ -1,16 +1,15 @@
 ''' it's a generator's module'''
 import os
 from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP, resume_types, JOB_TYPE
-from modules.adapters import WinWordAdapter
 from modules.tools import WindowsTools
 
 class DocsGenerator():
     ''' this class is representing a generator of documents '''
-    def __init__(self, companypath, data_dto):
+    def __init__(self, companypath, data_dto, office_adapter):
         self.companypath = companypath
         self.data_dto = data_dto
         if os.name == 'nt':
-            self.adapter = WinWordAdapter()
+            self.office_adapter = office_adapter
             self.tools = WindowsTools()
 
     def generate(self):
@@ -34,13 +33,13 @@ class DocsGenerator():
         type_res = resume_types[JOB_TYPE]
         source_path = self.tools.prep_path_for_win(self.companypath, RESUME_REGEXP)
         new_path = source_path.replace(type_res, self.data_dto.company)
-        self.adapter.save_docx_as_pdf(source_path, new_path)
+        self.office_adapter.save_docx_as_pdf(source_path, new_path)
 
     def _edit_cover_letter(self):
         type_res = resume_types[JOB_TYPE]
         source_path = self.tools.prep_path_for_win(self.companypath, COVER_LETTER_REGEXP)
 
-        self.adapter.replace_text_docx(source_path, self.data_dto.replacements)
+        self.office_adapter.replace_text_docx(source_path, self.data_dto.replacements)
 
         new_path = source_path.replace(type_res, self.data_dto.company)
-        self.adapter.save_docx_as_pdf(source_path, new_path)
+        self.office_adapter.save_docx_as_pdf(source_path, new_path)
