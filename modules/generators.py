@@ -1,10 +1,12 @@
 ''' it's a generator's module'''
 import os
 from config import EMAIL_REGEXP, RESUME_REGEXP, COVER_LETTER_REGEXP, resume_types, JOB_TYPE
+from modules.dto import UseCaseDataDTO
+from modules.tools import Tools
 
 class DocsGenerator():
     ''' this class is representing a generator of documents '''
-    def __init__(self, gen_path, data_dto, office_adapter, tools):
+    def __init__(self, gen_path, data_dto: UseCaseDataDTO, office_adapter, tools: Tools):
         self.gen_path = gen_path
         self.data_dto = data_dto
         self.office_adapter = office_adapter

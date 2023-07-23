@@ -1,20 +1,10 @@
 ''' it's a usecases module '''
 import os
 import sys
-from dataclasses import dataclass
 from modules.tools import Preparator, GarbageRemover, Tools
 from modules.generators import DocsGenerator
 from modules.adapters import WinWordAdapter
-
-@dataclass(frozen=True)
-class UseCaseDataDTO:
-    ''' DTO object for vars exchange '''
-    def __init__(self, company, job_type, position, job_portal, replacements):
-        object.__setattr__(self, 'company', company)
-        object.__setattr__(self, 'job_type', job_type)
-        object.__setattr__(self, 'position', position)
-        object.__setattr__(self, 'job_portal', job_portal)
-        object.__setattr__(self, 'replacements', replacements)
+from modules.dto import UseCaseDataDTO
 
 class WindowsWordCase:
     ''' it's a class used to UseCase for Windows and Word '''
