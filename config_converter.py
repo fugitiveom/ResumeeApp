@@ -1,3 +1,4 @@
+''' converting config.py into config.yaml '''
 import yaml
 import config
 
@@ -16,5 +17,5 @@ config_data = {
     'resume_types': config.resume_types
 }
 
-with open('config.yaml', 'w') as yaml_file:
+with open('config.yaml', 'w', encoding='utf8') as yaml_file:
     yaml.dump(config_data, yaml_file)
