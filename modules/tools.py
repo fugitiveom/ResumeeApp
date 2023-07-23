@@ -4,12 +4,11 @@ import shutil
 import glob
 from config import resume_types
 
-class WindowsTools:
+class Tools:
     ''' it's a class for win tools '''
-    def prep_path_for_win(self, path, regexp):
+    def find_file_w_ending(self, path, regexp):
         ''' just preparing paths for windows '''
         source_path = glob.glob(path + '/' + regexp)
-        source_path[0] = source_path[0].replace('/', '\\')
         return source_path[0]
 
 class Preparator:
